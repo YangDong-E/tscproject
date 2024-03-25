@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Carousel from "../component/home/carousel/Carousel";
+import ItemsCard from "../component/home/ItemsCard/ItemsCard";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <main>
+      <Carousel />
+      <ItemsCard />
+    </main>
+  );
+};
 
-export default Home
+export default Home;

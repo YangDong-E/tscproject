@@ -37,7 +37,6 @@ const SearchInput = styled.input`
   width: 400px;
   height: 46px;
   border: 2px solid purple;
-  border-radius: 50px;
   padding-left: 20px;
   position: relative;
 `;
@@ -58,7 +57,7 @@ const UserWrapper = styled.div`
 `;
 
 const IconTxt = styled.p`
-  color: var(--color-darkGrey);
+  color: black;
   font-size: 12px;
 `;
 
@@ -75,24 +74,6 @@ const IconWrapper = styled.div`
   }
 `;
 
-// const SellerCenterBtn = styled.button`
-//   margin-left: 30px;
-//   width: 165px;
-//   height: 55px;
-//   background: var(--color-main);
-//   color: var(--color-white);
-//   border-radius: 5px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
-// const BuyerWrapper = styled.div`
-//   display: flex;
-//   gap: 25px;
-//   position: relative;
-// `;
-
 export {
   LogoBtn,
   SearchInput,
@@ -101,7 +82,5 @@ export {
   UserWrapper,
   IconTxt,
   IconWrapper,
-  // SellerCenterBtn,
   HeaderWrapper,
-  // BuyerWrapper,
 };

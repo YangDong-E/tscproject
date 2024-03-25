@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
 
+  // 검색창에 들어갈 요소
   const [searchContent, setSearchContent] = useState("");
   //검색창
   // onChange에 마우스를 올려보면 e 객체의 타입을 React.ChangeEvent<HTMLInputElement>로 지정해서 구현하라고 나타난다.
@@ -13,6 +14,7 @@ const Header = () => {
   };
 
   //검색창 검색 버튼 함수
+  // 추후 클릭시 넘어갈 페이지 만들예정
   const handleSearch = () => {
     if (searchContent !== "") {
       navigate("/search", { state: searchContent });
