@@ -23,7 +23,7 @@ export default function Footer() {
         <S.CompanyName>(주) 아시아전기조명</S.CompanyName>
         <S.CompanyTxt>경기도 이천시 중리동</S.CompanyTxt>
         <S.CompanyTxt>Tel.031-638-5758</S.CompanyTxt>
-        <S.CompanyTxt>사업자 번호 : 000-0000-0000|도소매판매업</S.CompanyTxt>
+        <S.CompanyTxt>사업자 번호 : 000-0000-0000 | 도소매판매업</S.CompanyTxt>
         <S.CompanyTxt>대표 : 강경수</S.CompanyTxt>
       </S.DownWrapper>
     </S.FooterWrapper>

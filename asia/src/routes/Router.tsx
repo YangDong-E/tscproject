@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "../component/layout/MainLayout";
 import Home from "../pages/Home";
+import Search from "../pages/search/Search";
 
 export default function Router() {
   return (
@@ -10,6 +11,7 @@ export default function Router() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
         </Route>
       </Routes>
     </BrowserRouter>

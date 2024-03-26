@@ -21,10 +21,19 @@ const Header = () => {
     }
   };
 
+  // 로고 클릭 함수
+  // 로고 클릭시 홈 화면으로 전환되면서 검색창안에 값도 초기화
+  const handleHome = () => {
+    if (searchContent !== "") {
+      navigate("/");
+      setSearchContent("");
+    }
+  };
+
   return (
     <S.HeaderWrapper>
       <S.SearchWrapper>
-        <S.LogoBtn />
+        <S.LogoBtn onClick={handleHome} />
         <S.SearchInput
           type="text"
           onChange={onChangeSearch}
