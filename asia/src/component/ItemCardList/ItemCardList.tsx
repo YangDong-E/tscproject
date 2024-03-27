@@ -1,70 +1,25 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
-import ItemsCard from "../home/ItemsCard/ItemsCard";
+import React, { useEffect, useState } from "react"; // JSX 코드가 있는 파일은 반드시 첫 줄에 React라는 심벌을 import문으로 불러오는 코드가 있어야 한다.
+import { IUser, getDataPromise } from "../../data/getDataPromis";
+import { ItemCard } from "../home/ItemsCard/ItemsCard";
+import { ItemCardLists } from "./ItemCardListStyle";
 
-export interface CartItemType {
-  id: number;
-  category: string;
-  description: string;
-  image: string;
-  price: number;
-  title: string;
-  amount: number;
-}
-
-const getProducts = async (): Promise<CartItemType[]> => {
-  return await (await fetch("https://fakestoreapi.com/products")).json();
-};
-
-const App = () => {
-  const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-  const { data, isLoading, error } = useQuery("products", getProducts);
-
-  const getTotalItems = (items: CartItemType[]) => {
-    return items.reduce((ack: number, item) => {
-      return ack + item.amount;
-    }, 0);
+const ItemCardList: React.FC = () => {
+  const limit = 1;
+  const [skip, setSkip] = useState(0);
+  const [users, setUsers] = useState<IUser[]>([]); // useState의 입력 매개변수인 빈 배열[]은 users에 초깃값으로 사용
+  const onClick = () => {
+    getDataPromise((receivedUsers: IUser[]) => {
+      setSkip(skip + limit);
+      setUsers([...users, ...receivedUsers]);
+    })(skip, limit);
   };
-
-  const handleAddToCart = (clickedItem: CartItemType) => {
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...clickedItem, amount: 1 }];
-    });
-  };
-
-  const handleRemoveFromCart = (id: number) => {
-    setCartItems((prev) =>
-      prev.reduce((ack, item) => {
-        if (item.id === id) {
-          if (item.amount === 1) return ack;
-          return [...ack, { ...item, amount: item.amount - 1 }];
-        } else {
-          return [];
-        }
-      }, [] as CartItemType[])
-    );
-  };
-
-  if (error) return <div>에러 발생~!!</div>;
+  useEffect(onClick, []);
   return (
-    <>
-      <div>
-        {data?.map((item) => (
-          <div key={item.id}>
-            <ItemsCard item={item} handleAddToCart={handleAddToCart} />
-          </div>
-        ))}
-      </div>
-    </>
+    <ItemCardLists className="App">
+      {users.map((user: IUser, key: number) => (
+        <ItemCard click={onClick} user={user} key={key.toString()} />
+      ))}
+    </ItemCardLists>
   );
 };
-export default App;
+export default ItemCardList;

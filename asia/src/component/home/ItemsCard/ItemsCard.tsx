@@ -1,44 +1,32 @@
 import React from "react";
+import { IUser } from "../../../data/getDataPromis";
 import * as S from "../ItemsCard/ItemsCardStyle";
-import { useNavigate } from "react-router-dom";
-import { CartItemType } from "../../ItemCardList/ItemCardList";
 
-type Props = {
-  item: CartItemType;
-  handleAddToCart: (clickedItem: CartItemType) => void;
-};
+const random = (max: number) => Math.floor(Math.random() * max);
 
-const ItemsCard: React.FC<Props> = ({ item, handleAddToCart }) => {
-  const navigate = useNavigate();
+export const ItemCard: React.FC<{ user: IUser; click: () => void }> = ({
+  user,
+  click,
+}) => {
+  const { name, email, sentence, profession, birthday } = user;
+  const b = new Date(birthday);
+  const src = `https://source.unsplash.com/random/1000x${random(300) + 500}`;
 
   return (
-    // <S.ExampleItems>
-    //   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function () {
-    //     return (
-    //       <S.ItemsCardWrapper>
-    //         <S.ItemImg>
-    //           <div>사진</div>
-    //         </S.ItemImg>
-    //         <S.ItemCardTextWrapper>
-    //           <S.CompanyName>회사명</S.CompanyName>
-    //           <S.ItemName>제품명</S.ItemName>
-    //           <S.ItemPrice>가격</S.ItemPrice>
-    //         </S.ItemCardTextWrapper>
-    //       </S.ItemsCardWrapper>
-    //     );
-    //   })}
-    // </S.ExampleItems>
-    <S.ItemsCardWrapper>
-      <S.ItemImg>
-        <div>사진</div>
-      </S.ItemImg>
-      <S.ItemCardTextWrapper>
-        <S.CompanyName>{item.title}</S.CompanyName>
-        <S.ItemName>{item.description}</S.ItemName>
-        <S.ItemPrice>{item.price}</S.ItemPrice>
+    <S.ItemsCardWrapper className="card">
+      <S.ItemImg src={src} className="card-img-top" alt="" />
+      <S.ItemCardTextWrapper className="card-body">
+        <S.CompanyName className="card-title">
+          {name} ({email})
+        </S.CompanyName>
+        <S.ItemName className="card-subtitle mb-2 text-muted">
+          {profession} birthday: {b.getFullYear()}
+        </S.ItemName>
+        <S.ItemPrice className="card-text">{sentence}</S.ItemPrice>
+        <button className="btn btn-primary" onClick={click}>
+          more data...
+        </button>
       </S.ItemCardTextWrapper>
     </S.ItemsCardWrapper>
   );
 };
-
-export default ItemsCard;

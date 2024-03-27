@@ -3,13 +3,13 @@ import styled from "styled-components";
 const ItemsCardWrapper = styled.div`
   border: 1px solid red;
 `;
-const ItemImg = styled.div`
+const ItemImg = styled.img`
   position: relative;
   width: 300px;
   height: 300px;
   border: 1px solid gray;
   border-radius: 10px;
-  background-color: blue;
+  /* background-color: blue; */
   background-size: cover;
   // 자식요소 중앙 정렬
   align-items: center;

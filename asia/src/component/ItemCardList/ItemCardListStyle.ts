@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ItemCardList = styled.ul`
+const ItemCardLists = styled.div`
   display: grid;
   // grid 비율을 1:1:1로
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -8,4 +8,4 @@ const ItemCardList = styled.ul`
   padding: 75px 105px;
 `;
 
-export { ItemCardList };
+export { ItemCardLists };
