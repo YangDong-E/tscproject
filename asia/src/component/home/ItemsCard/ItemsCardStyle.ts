@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 const ItemsCardWrapper = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const ItemImg = styled.img`
   position: relative;
