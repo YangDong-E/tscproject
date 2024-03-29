@@ -46,7 +46,11 @@ const Header = () => {
         <S.IconWrapper>
           <S.IconTxt>장바구니</S.IconTxt>
         </S.IconWrapper>
-        <S.IconWrapper>
+        <S.IconWrapper
+          onClick={() => {
+            navigate("/account/login");
+          }}
+        >
           <S.IconTxt>로그인</S.IconTxt>
         </S.IconWrapper>
       </S.UserWrapper>
