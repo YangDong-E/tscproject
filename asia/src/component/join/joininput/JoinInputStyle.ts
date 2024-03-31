@@ -24,33 +24,21 @@ const Input = styled.input<{
   width: ${({ width }) => (width ? width : "480px")};
   height: 54px;
   border: ${({ error, value, id }) =>
-    value !== "" &&
-    error !== "" &&
-    error !== "멋진 아이디네요 :)" &&
-    id !== "storeName" &&
-    error !== "사용 가능한 사업자등록번호입니다."
-      ? "1px solid var(--color-red)"
-      : "1px solid var(--color-grey)"};
+    value !== "" && error !== "" && error !== "멋진 아이디네요 :)"
+      ? "1px solid red"
+      : "1px solid rgb(128,128,128)"};
   border-radius: 5px;
   background: ${({ icon }) =>
     icon && `url(${icon}) no-repeat right 15px center`};
   padding: 0px 10px;
   outline-color: ${({ error, value, id }) =>
-    value !== "" &&
-    error !== "" &&
-    error !== "멋진 아이디네요 :)" &&
-    id !== "storeName" &&
-    error !== "사용 가능한 사업자등록번호입니다."
-      ? "var(--color-red)"
-      : "var(--color-main)"};
+    value !== "" && error !== "" && error !== "멋진 아이디네요 :)"
+      ? "red"
+      : "blue"};
 `;
 
 const ErrorMessage = styled.p<{ error?: string }>`
-  color: ${({ error }) =>
-    error !== "멋진 아이디네요 :)" &&
-    error !== "사용 가능한 사업자등록번호입니다."
-      ? "var(--color-red)"
-      : "var(--color-main)"};
+  color: ${({ error }) => (error !== "멋진 아이디네요 :)" ? "red" : "blue")};
   margin-top: 10px;
 `;
 
@@ -71,11 +59,8 @@ const PhoneInput = styled.input<{
   height: 54px;
   border-radius: 5px;
   border: ${({ error }) =>
-    error !== ""
-      ? "1px solid var(--color-red)"
-      : "1px solid var(--color-grey)"};
-  outline-color: ${({ error }) =>
-    error !== "" ? "var(--color-red)" : "var(--color-main)"};
+    error !== "" ? "1px solid red" : "1px solid rgb(128,128,128)"};
+  outline-color: ${({ error }) => (error !== "" ? "red" : "blue")};
   padding: 0px 10px;
 
   ::-webkit-outer-spin-button,

@@ -6,19 +6,15 @@ import checkOnIcon from "../../../assets/icon/icon-check-on.svg";
 import checkOffIcon from "../../../assets/icon/icon-check-off.svg";
 import {
   fetchPostUserName,
-  fetchPostCompanyNum,
   fetchPostJoin,
   getNameStatus,
   getNameMessage,
-  getCompanyStatus,
-  getCompanyMessage,
   getJoinStatus,
   getJoinError,
   getJoinUserType,
   JoinDataForm,
   resetAll,
   resetName,
-  resetCompanyNumber,
 } from "../../../features/joinSlice";
 import { useAppDispatch, useAppSelector } from "../../../hook/hooks";
 import { CommonBtn } from "../../common/button/ButtonStyle";
@@ -44,7 +40,7 @@ const JoinInputBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid var(--color-grey);
+  border: 1px solid rgb(128, 128, 128);
   border-radius: 10px;
   padding: 40px 0;
 `;
@@ -54,7 +50,7 @@ const AgreeWrapper = styled.div`
   align-items: flex-end;
   margin: 50px 0;
   span {
-    color: var(--color-darkGrey);
+    color: rgb(169, 169, 169);
   }
   span + Link {
     font-weight: 700;
@@ -69,12 +65,10 @@ export default function JoinInputForm() {
   const userType = useAppSelector(getJoinUserType);
 
   const nameStatus = useAppSelector(getNameStatus);
-  const companyStatus = useAppSelector(getCompanyStatus);
   const joinStatus = useAppSelector(getJoinStatus);
   const joinError = useAppSelector(getJoinError);
 
   const nameMessage = useAppSelector(getNameMessage);
-  const companyMessage = useAppSelector(getCompanyMessage);
 
   //정보 객체 생성
   const initialValues = {
@@ -101,25 +95,14 @@ export default function JoinInputForm() {
     companyRegistrationNumber: "",
   };
 
-  const initialSellerValues = {
-    companyRegistrationNumber: "",
-    storeName: "",
-  };
-
   //아이디 중복 확인 버튼
   const [onUsernameBtn, setOnUsernameBtn] = useState(false);
-
-  //사업자 등록번호 인증 버튼
-  const [onCompanyRegistrationBtn, setCompanyRegistrationBtn] = useState(false);
 
   //유저 정보 상태
   const [userFormValue, setUserFormValue] = useState(initialValues);
 
   //에러 메세지 상태
   const [errorMessage, setErrorMessage] = useState(initialError);
-
-  //판매자 추가 정보
-  const [sellerValues, setSellerValues] = useState(initialSellerValues);
 
   useEffect(() => {
     //가입 하기 버튼 클릭후 성공 or 실패 경우
@@ -242,43 +225,6 @@ export default function JoinInputForm() {
     }
   };
 
-  //사업자 등록 번호 인증
-  const checkCompanyRegistrationNumber = (number: string) => {
-    dispatch(fetchPostCompanyNum(number));
-  };
-
-  //사업자 등록 번호 변경 함수
-  const onChangeCompanyRegistrationNumber = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (companyStatus !== "idle") {
-      dispatch(resetCompanyNumber());
-    } else {
-      const { name, value } = e.target;
-      const message = "* 사업자 등록 번호는 숫자 10자로 입력해주세요.";
-      const companyNumRegExp = "^[0-9]{1,10}$";
-
-      setSellerValues({ ...sellerValues, [name]: value });
-      if (value.match(companyNumRegExp)) {
-        if ((value.length > 0 && value.length < 10) || value.length > 10) {
-          setErrorMessage({ ...errorMessage, [name]: message });
-          setCompanyRegistrationBtn(false);
-        } else {
-          setErrorMessage({ ...errorMessage, [name]: "" });
-          setCompanyRegistrationBtn(true);
-        }
-      } else {
-        setErrorMessage({ ...errorMessage, [name]: message });
-        setCompanyRegistrationBtn(false);
-      }
-    }
-  };
-
-  //스토어 이름 변경
-  const onChangeStoreName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSellerValues({ ...sellerValues, storeName: e.target.value });
-  };
-
   //체크 박스 확인
   const onChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserFormValue({ ...userFormValue, checkBox: e.target.checked });
@@ -291,10 +237,6 @@ export default function JoinInputForm() {
       alert("아이디 인증을 완료해 주세요.");
       return;
     }
-    if (userType === "SELLER" && companyStatus !== "succeeded") {
-      alert("사업자 등록 번호 인증을 완료해 주세요.");
-      return;
-    }
 
     const { username, password, checkPassword, name, phone1, phone2, phone3 } =
       userFormValue;
@@ -305,13 +247,6 @@ export default function JoinInputForm() {
       phone_number: `${phone1}${phone2}${phone3}`,
       name: name,
     };
-    if (userType === "SELLER") {
-      userData = {
-        company_registration_number: sellerValues.companyRegistrationNumber,
-        store_name: sellerValues.storeName,
-        ...userData,
-      };
-    }
     console.log(userData);
     dispatch(fetchPostJoin({ userType, userData }));
   };
@@ -380,28 +315,6 @@ export default function JoinInputForm() {
             value2={userFormValue.email2}
             error={errorMessage.email}
           />
-          {userType === "SELLER" ? (
-            <>
-              <CommonInput
-                label="사업자 등록번호"
-                type="text"
-                name="companyRegistrationNumber"
-                width="346px"
-                onChange={onChangeCompanyRegistrationNumber}
-                onClick={checkCompanyRegistrationNumber}
-                onButton={onCompanyRegistrationBtn}
-                error={companyMessage || errorMessage.companyRegistrationNumber}
-                value={sellerValues.companyRegistrationNumber}
-              />
-              <CommonInput
-                label="스토어 이름"
-                type="text"
-                name="storeName"
-                onChange={onChangeStoreName}
-                value={sellerValues.storeName}
-              />
-            </>
-          ) : null}
         </JoinInputBox>
         <AgreeWrapper>
           <CheckBoxInput
@@ -410,7 +323,7 @@ export default function JoinInputForm() {
             children={undefined}
           />
           <span>
-            호두샵의&nbsp;
+            아시아전기의&nbsp;
             <Link to="/">이용약관</Link> 및<Link to="/"> 개인정보처리방침</Link>
             에 대한 내용을 확인하였고 동의합니다.
           </span>

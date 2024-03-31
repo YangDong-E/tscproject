@@ -30,14 +30,6 @@ function PhoneSelectInput({
   const [optionToggle, setOptionToggle] = useState(false);
   const [selectValue, setSelectValue] = useState("");
 
-  const handleChangeOption = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (optionToggle === true) {
-      setOptionToggle(false);
-    } else {
-      setOptionToggle(true);
-    }
-  };
-
   const handleSelectValue = (item: string) => {
     onClick(item);
     setSelectValue(item);
@@ -49,13 +41,6 @@ function PhoneSelectInput({
         <S.SelectInput
           value={selectValue !== "" ? selectValue : selectItems[0]}
         />
-        <button onClick={handleChangeOption}>
-          {optionToggle === false ? (
-            <SVGIcon id="icon-down-arrow" width="25px" />
-          ) : (
-            <SVGIcon id="icon-up-arrow" width="25px" />
-          )}
-        </button>
       </S.SelectBox>
       {optionToggle === true ? (
         <S.OptionBox>
