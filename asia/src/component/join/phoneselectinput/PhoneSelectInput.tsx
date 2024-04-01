@@ -15,18 +15,7 @@ type PhoneSelectInputProps = {
   textAlign?: string;
 };
 
-function PhoneSelectInput({
-  selectItems,
-  onClick,
-  onChange,
-  checkItem,
-  width,
-  maxWidth,
-  minWidth,
-  radius,
-  padding,
-  textAlign,
-}: PhoneSelectInputProps) {
+function PhoneSelectInput({ selectItems, onClick }: PhoneSelectInputProps) {
   const [optionToggle, setOptionToggle] = useState(false);
   const [selectValue, setSelectValue] = useState("");
 
