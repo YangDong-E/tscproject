@@ -5,6 +5,10 @@ import Home from "../pages/Home";
 // import Search from "../pages/search/Search";
 import Login from "../pages/account/login/Login";
 import Join from "../pages/account/join/Join";
+import axios from "axios";
+
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "development" ? "http://localhost:4000" : "/";
 
 export default function Router() {
   return (

@@ -1,25 +1,87 @@
-import React, { useEffect, useState } from "react"; // JSX 코드가 있는 파일은 반드시 첫 줄에 React라는 심벌을 import문으로 불러오는 코드가 있어야 한다.
-import { IUser, getDataPromise } from "../../data/getDataPromis";
-import { ItemCard } from "../home/ItemsCard/ItemsCard";
-import { ItemCardLists } from "./ItemCardListStyle";
+import React, { useEffect, useReducer } from "react";
+import { Col, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Product } from "../../types/Product";
+import { ApiError } from "../../types/ApiError";
+import axios from "axios";
+import { getError } from "../../utils/utils";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 
-const ItemCardList: React.FC = () => {
-  const limit = 1;
-  const [skip, setSkip] = useState(0);
-  const [users, setUsers] = useState<IUser[]>([]); // useState의 입력 매개변수인 빈 배열[]은 users에 초깃값으로 사용
-  const onClick = () => {
-    getDataPromise((receivedUsers: IUser[]) => {
-      setSkip(skip + limit);
-      setUsers([...users, ...receivedUsers]);
-    })(skip, limit);
-  };
-  useEffect(onClick, []);
-  return (
-    <ItemCardLists className="App">
-      {users.map((user: IUser, key: number) => (
-        <ItemCard click={onClick} user={user} key={key.toString()} />
-      ))}
-    </ItemCardLists>
-  );
+type State = {
+  products: Product[];
+  loading: boolean;
+  error: string;
 };
-export default ItemCardList;
+
+type Action =
+  | {
+      type: "FETCH_REQUEST";
+    }
+  | {
+      type: "FETCH_SUCCESS";
+      payload: Product[];
+    }
+  | {
+      type: "FETCH_FAIL";
+      payload: string;
+    };
+
+const initialState: State = {
+  products: [],
+  loading: true,
+  error: "",
+};
+
+const reducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case "FETCH_REQUEST":
+      return { ...state, loading: true };
+    case "FETCH_SUCCESS":
+      return { ...state, products: action.payload, loading: false };
+    case "FETCH_FAIL":
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export default function HomePage() {
+  const [{ loading, error, products }, dispatch] = useReducer<
+    React.Reducer<State, Action>
+  >(reducer, initialState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("/api/products");
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err as ApiError) });
+      }
+    };
+    fetchData();
+  }, []);
+
+  return loading ? (
+    <LoadingBox />
+  ) : error ? (
+    <MessageBox variant="danger">{error}</MessageBox>
+  ) : (
+    <Row>
+      {products.map((product) => (
+        <Col key={product.slug} sm={6} md={4} lg={3}>
+          <Link to={"/product/" + product.slug}>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="product-image"
+            />
+            <h2>{product.name}</h2>
+            <p>${product.price}</p>
+          </Link>
+        </Col>
+      ))}
+    </Row>
+  );
+}
