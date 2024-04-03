@@ -64,7 +64,7 @@ function Rating(props: {
       {caption ? (
         <span>{caption}</span>
       ) : numReviews != 0 ? (
-        <span>{" " + numReviews + " reviews"}</span>
+        <span>{" " + numReviews + "개 리뷰"}</span>
       ) : (
         ""
       )}{" "}

@@ -14,13 +14,13 @@ function ProductItem({ product }: { product: Product }) {
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+        <Card.Text>{product.price} 원</Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
-            Out of stock
+            재고 없음
           </Button>
         ) : (
-          <Button>Add to cart</Button>
+          <Button>장바구니 담기</Button>
         )}
       </Card.Body>
     </Card>
