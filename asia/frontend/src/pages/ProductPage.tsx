@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -8,6 +8,9 @@ import { getError } from "../utils";
 import { ApiError } from "../types/ApiError";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import Rating from "../components/Rating";
+import { Store } from "../Store";
+import { toast } from "react-toastify";
+import { convertProductToCartItem } from "../utils";
 
 function ProductPage() {
   const params = useParams();
@@ -19,6 +22,26 @@ function ProductPage() {
     isLoading,
     error,
   } = useGetProductDetailsBySlugQuery(slug!);
+
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+
+  const navigate = useNavigate();
+
+  const addToCartHandler = async () => {
+    const existItem = cart.cartItems.find((x) => x._id === product!._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (product!.countInStock < quantity) {
+      toast.warn("Sorry. Product is out of stock");
+      return;
+    }
+    dispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...convertProductToCartItem(product!), quantity },
+    });
+    toast.success("Product added to the cart");
+    navigate("/cart");
+  };
 
   return isLoading ? (
     <LoadingBox />
@@ -81,7 +104,9 @@ function ProductPage() {
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
-                      <Button variant="primary">장바구니 담기</Button>
+                      <Button onClick={addToCartHandler} variant="primary">
+                        장바구니 담기
+                      </Button>
                     </div>
                   </ListGroup.Item>
                 )}
