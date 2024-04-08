@@ -19,6 +19,10 @@ import CartPage from "./pages/CartPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import ShippingAddressPage from "./pages/ShippingAdressPage";
+import PaymentMethodPage from "./pages/PaymentMethodPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
+import OrderPage from "./pages/OrderPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +32,12 @@ const router = createBrowserRouter(
       <Route path="cart" element={<CartPage />} />
       <Route path="signin" element={<SigninPage />} />
       <Route path="signup" element={<SignupPage />} />
-      <Route path="shipping" element={<ShippingAddressPage />} />
+      <Route path="" element={<ProtectedRoute />}>
+        <Route path="shipping" element={<ShippingAddressPage />} />
+        <Route path="payment" element={<PaymentMethodPage />} />
+        <Route path="placeorder" element={<PlaceOrderPage />} />
+        <Route path="order/:id" element={<OrderPage />} />
+      </Route>
     </Route>
   )
 );

@@ -12,6 +12,8 @@ export default function ShippingAddressPage() {
     userInfo,
     cart: { shippingAddress },
   } = state;
+
+  // main.tsx에서 <Route path="" element={<ProtectedRoute />}> 를 사용하여 이 코드는 없어도 된다.
   useEffect(() => {
     if (!userInfo) {
       navigate("/signin?redirect=/shipping");
@@ -54,7 +56,7 @@ export default function ShippingAddressPage() {
   return (
     <div>
       <Helmet>
-        <title>Shipping Address</title>
+        <title>주문 하기</title>
       </Helmet>
 
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -62,7 +64,7 @@ export default function ShippingAddressPage() {
         <h1 className="my-3">Shipping Address</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="fullName">
-            <Form.Label>Full Name</Form.Label>
+            <Form.Label>이름</Form.Label>
             <Form.Control
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -70,7 +72,7 @@ export default function ShippingAddressPage() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="address">
-            <Form.Label>Address</Form.Label>
+            <Form.Label>주소</Form.Label>
             <Form.Control
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -78,7 +80,7 @@ export default function ShippingAddressPage() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="city">
-            <Form.Label>City</Form.Label>
+            <Form.Label>도시</Form.Label>
             <Form.Control
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -86,7 +88,7 @@ export default function ShippingAddressPage() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="postalCode">
-            <Form.Label>Postal Code</Form.Label>
+            <Form.Label>우편 번호</Form.Label>
             <Form.Control
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
@@ -94,7 +96,7 @@ export default function ShippingAddressPage() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="country">
-            <Form.Label>Country</Form.Label>
+            <Form.Label>나라</Form.Label>
             <Form.Control
               value={country}
               onChange={(e) => setCountry(e.target.value)}
@@ -103,7 +105,7 @@ export default function ShippingAddressPage() {
           </Form.Group>
           <div className="mb-3">
             <Button variant="primary" type="submit">
-              Continue
+              결제하기
             </Button>
           </div>
         </Form>
