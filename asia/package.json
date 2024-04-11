@@ -1,0 +1,13 @@
+{
+  "name": "asia",
+  "version": "1.0.0",
+  "description": "## react + typescript 사용하여 웹 페이지 만들기",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm --force install  && npm run build  && cd ../frontend && npm install && npm run build",
+    "start": "TG_ALLOW_MIXED=ALLOW  node backend/build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
