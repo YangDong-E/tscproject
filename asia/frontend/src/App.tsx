@@ -86,7 +86,7 @@ function App() {
                     </Link>
                   </NavDropdown>
                 ) : (
-                  <NavDropdown className="header-link" title={`Hello, sign in`}>
+                  <NavDropdown className="header-link" title={`로그인`}>
                     <LinkContainer to="/signin">
                       <NavDropdown.Item>로그인</NavDropdown.Item>
                     </LinkContainer>
