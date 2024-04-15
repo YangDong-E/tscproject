@@ -47,12 +47,12 @@ export default function SigninPage() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign In</title>
+        <title>로그인</title>
       </Helmet>
-      <h1 className="my-3">Sign In</h1>
+      <h1 className="my-3">로그인</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>이메일</Form.Label>
           <Form.Control
             type="email"
             required
@@ -60,7 +60,7 @@ export default function SigninPage() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>비밀번호</Form.Label>
           <Form.Control
             type="password"
             required
@@ -69,13 +69,13 @@ export default function SigninPage() {
         </Form.Group>
         <div className="mb-3">
           <Button disabled={isLoading} type="submit">
-            Sign In
+            로그인
           </Button>
           {isLoading && <LoadingBox />}
         </div>
         <div className="mb-3">
-          New customer?{" "}
-          <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
+          신규 회원이신가요?{" "}
+          <Link to={`/signup?redirect=${redirect}`}>회원가입</Link>
         </div>
       </Form>
     </Container>

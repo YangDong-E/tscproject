@@ -28,7 +28,7 @@ function ProductItem({ product }: { product: Product }) {
     toast.success("Product added to the cart");
   };
   return (
-    <Card>
+    <Card style={{ marginTop: "10px" }}>
       <Link to={`/product/${product.slug}`}>
         <img src={product.image} className="card-img-top" alt={product.name} />
       </Link>
