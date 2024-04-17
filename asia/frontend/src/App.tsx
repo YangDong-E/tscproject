@@ -12,6 +12,12 @@ import { LinkContainer } from "react-router-bootstrap";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Store } from "./Store";
+import { useGetCategoriesQuery } from "./hooks/productHooks";
+import LoadingBox from "./components/LoadingBox";
+import MessageBox from "./components/MessageBox";
+import { getError } from "./utils";
+import { ApiError } from "./types/ApiError";
+import SearchBox from "./components/SearchBox";
 
 function App() {
   const {
@@ -36,6 +42,7 @@ function App() {
   };
 
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
 
   return (
     <div className="d-flex flex-column vh-100">
@@ -51,7 +58,7 @@ function App() {
             <LinkContainer to="/" className="header-link">
               <Navbar.Brand>아시아 전기</Navbar.Brand>
             </LinkContainer>
-
+            <SearchBox />
             <Navbar.Collapse>
               <Nav className="w-100 justify-content-end">
                 <Link
@@ -131,6 +138,62 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         </Navbar>
       </header>
+      {sidebarIsOpen && (
+        <div
+          onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+          className="side-navbar-backdrop"
+        ></div>
+      )}
+      <div
+        className={
+          sidebarIsOpen
+            ? "active-nav side-navbar d-flex justify-content-between flex-wrap flex-column"
+            : "side-navbar d-flex justify-content-between flex-wrap flex-column"
+        }
+      >
+        <ListGroup variant="flush">
+          <ListGroup.Item action className="side-navbar-user">
+            <LinkContainer
+              to={userInfo ? `/profile` : `/signin`}
+              onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+            >
+              <span>
+                {userInfo ? `Hello, ${userInfo.name}` : `Hello, sign in`}
+              </span>
+            </LinkContainer>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <div className="d-flex justify-content-between align-items-center">
+              {" "}
+              <strong>Categories</strong>
+              <Button
+                variant={mode}
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+              >
+                <i className="fa fa-times" />
+              </Button>
+            </div>
+          </ListGroup.Item>
+          {isLoading ? (
+            <LoadingBox />
+          ) : error ? (
+            <MessageBox variant="danger">
+              {getError(error as ApiError)}
+            </MessageBox>
+          ) : (
+            categories!.map((category) => (
+              <ListGroup.Item action key={category}>
+                <LinkContainer
+                  to={{ pathname: "/search", search: `category=${category}` }}
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>{category}</Nav.Link>
+                </LinkContainer>
+              </ListGroup.Item>
+            ))
+          )}
+        </ListGroup>
+      </div>
       <main>
         <Container fluid>
           <Outlet />
