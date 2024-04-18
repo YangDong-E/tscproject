@@ -165,7 +165,7 @@ function App() {
           <ListGroup.Item>
             <div className="d-flex justify-content-between align-items-center">
               {" "}
-              <strong>Categories</strong>
+              <strong>카테고리</strong>
               <Button
                 variant={mode}
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}

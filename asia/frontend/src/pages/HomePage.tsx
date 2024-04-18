@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { useGetProductsQuery } from "../hooks/productHooks";
 import { getError } from "../utils";
 import { ApiError } from "../types/ApiError";
+import CarouselBox from "../components/CarouselBox";
 
 export default function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery();
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Helmet>
         <title>아시아 전기</title>
       </Helmet>
+      <CarouselBox />
       {products!.map((product) => (
         <Col key={product.slug} sm={6} md={4} lg={3}>
           <ProductItem product={product} />

@@ -122,3 +122,16 @@ a.header-link:hover,
 button.side-navbar-user:hover {
   color: white;
 }
+
+/* Carousel */
+
+.slidercontents {
+  height: 480px;
+  /* background-image: ; */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
