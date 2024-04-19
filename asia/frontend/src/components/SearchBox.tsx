@@ -18,8 +18,8 @@ export default function SearchBox() {
           name="q"
           id="q"
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search Amazona"
-          aria-label="Search Amazona"
+          placeholder="아시아 전기"
+          aria-label="아시아 전기"
           aria-describedby="button-search"
         ></FormControl>
         <Button variant="outline-primary" type="submit" id="button-search">
