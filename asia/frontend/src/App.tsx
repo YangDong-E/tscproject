@@ -17,7 +17,7 @@ import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
 import { getError } from "./utils";
 import { ApiError } from "./types/ApiError";
-import SearchBox from "./components/SearchBox";
+// import SearchBox from "./components/SearchBox";
 
 function App() {
   const {
@@ -58,7 +58,7 @@ function App() {
             <LinkContainer to="/" className="header-link">
               <Navbar.Brand>아시아 전기</Navbar.Brand>
             </LinkContainer>
-            <SearchBox />
+            {/* <SearchBox /> */}
             <Navbar.Collapse>
               <Nav className="w-100 justify-content-end">
                 <Link
@@ -124,7 +124,7 @@ function App() {
               </Nav>
             </Navbar.Collapse>
           </div>
-          <div className="sub-header">
+          {/* <div className="sub-header">
             <div className="d-flex">
               <Link
                 to="#"
@@ -134,7 +134,7 @@ function App() {
                 <i className="fas fa-bars"></i> 전체
               </Link>
             </div>
-          </div>
+          </div> */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         </Navbar>
       </header>
