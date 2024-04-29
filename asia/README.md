@@ -36,6 +36,19 @@
 8. 결제하기
 9. 마이페이지
 
+### 진행하며 생겼던 문제점들
+
+1. product를 뿌릴때 key값을 지정하지않으면 에러가 발생하지만 key값을 지정해줌으로서 에러가 없어진다.
+2. react-query로 데이터가져오기(https://youtu.be/-ifcPnXHn8Q?feature=shared&t=6425)참조
+3. react-toastify로 에러 창 띄우기
+4. Store.tsx에서 case "CART_ADD_ITEM" 부분에서 에러가 발생했는데 케이스 내부를 캡슐화 하여 해결함
+(https://stackoverflow.com/questions/50752987/eslint-no-case-declaration-unexpected-lexical-declaration-in-case-block)
+5. SignPage에서 isLoading 부분이 any타입으로 에러가 났었는데 userHooks.ts에서 @tanstack/react-query를 5 버전에서 4 버전으로 다운그레이드하여 해결함
+6. PostMan으로 APi 통신 확인
+7. Paypal 연동중 main.tsx에서 <PayPalScriptProvider options>의 옵션의 값에서 오류가 났는데 버전을 7.8.2버전으로 다운그레이드하여 해결함
+8. Paypal로 연동한 이유는 결제 시스템을 테스트 해보려고 구글링을 하던 중 Paypal로 데모 연동을 할 수 있다는걸 알게되어 진행함
+
+
 ### 앞으로 해볼것
 
 - React.js가 아닌 Next.js를 사용하여 코드 작성 연습
